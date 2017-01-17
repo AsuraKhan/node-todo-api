@@ -86,6 +86,19 @@ app.patch('/todos/:id', (req, res) => {
 	})
 });
 
+app.post("/users", (req, res) =>{
+	var body = _.pick(req.body, ['Email', 'password']);
+
+	var user = new User(body);
+
+	user.save().then((users) => {
+		res.send(users);
+	}).catch((e) => {
+		res.status(400).send(e);
+	});
+
+});
+
 app.listen(3000, function(){
 	console.log("Listen on 3000");
 });
