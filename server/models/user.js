@@ -69,6 +69,7 @@ UserSchema.statics.findByToken = function(token) {
 	});
 };
 
+// This functions is called BEFORE save.
 UserSchema.pre('save', function(next){
 	var user = this;
 
