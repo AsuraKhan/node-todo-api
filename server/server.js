@@ -107,6 +107,18 @@ app.get('/users/me', authenticate, (req, res) => {
 	res.send(req.user);
 });
 
+app.post("/users/login", (req, res) =>{
+	var body = _.pick(req.body, ['Email', 'password']);
+
+	User.findByCredentials(body.Email, body.password).then((user) => {
+		user.generateAuthToken().then((token) => {
+			res.header('x-auth', token).send(user);
+		});
+	}).catch((e) => {
+		res.status(400).send(e);
+	});
+});
+
 app.listen(3000, function(){
 	console.log("Listen on 3000");
 });
